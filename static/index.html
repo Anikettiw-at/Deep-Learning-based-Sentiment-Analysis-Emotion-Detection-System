@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodline - Emotion Prediction</title>
+<meta name="description" content="Type a sentence and a BiGRU model guesses the emotion behind it.">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🙂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,600&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/static/style.css?v=4">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="dot" id="statusDot"></span>
+      <span class="brand-name">Moodline</span>
+    </div>
+    <p class="brand-tag">emotion detection &middot; BiGRU trained on dair-ai/emotion</p>
+  </header>
+
+  <main>
+
+    <section class="card console">
+      <div class="orb-stage" aria-hidden="true">
+        <div class="orb-glow"></div>
+        <div class="orb" id="orb"><span id="orbEmoji">✎</span></div>
+      </div>
+
+      <div class="input-panel">
+        <label class="eyebrow" for="textInput">Your sentence</label>
+        <textarea id="textInput" maxlength="2000"
+          placeholder="How are you feeling today?"></textarea>
+
+        <div class="examples" id="examples">
+          <span class="examples-label">Try:</span>
+        </div>
+
+        <div class="input-footer">
+          <span class="mono faint"><span id="charCount">0</span> / 2000</span>
+          <button id="analyzeBtn" class="btn-primary" disabled>
+            <span id="btnLabel">Analyze</span> <span class="arrow">→</span>
+          </button>
+        </div>
+
+        <p class="error-msg" id="errorMsg" hidden></p>
+      </div>
+    </section>
+
+    <section class="result" id="resultSection" hidden>
+      <div class="card">
+        <span class="eyebrow">Detected</span>
+        <div class="reveal-main">
+          <span class="reveal-emoji" id="emotionEmoji"></span>
+          <h1 id="emotionWord"></h1>
+        </div>
+        <span class="mono dim" id="confidenceText"></span>
+        <blockquote class="echoed" id="echoedText"></blockquote>
+      </div>
+
+      <div class="card">
+        <span class="eyebrow">All emotions</span>
+        <div class="bars" id="bars"></div>
+      </div>
+    </section>
+
+    <section class="card history" id="historySection" hidden>
+      <div class="history-head">
+        <span class="eyebrow">History</span>
+        <div class="history-actions">
+          <button class="btn-ghost" id="downloadCsv">Download CSV</button>
+          <button class="btn-ghost" id="downloadJson">Download JSON</button>
+          <button class="btn-ghost danger" id="clearHistory">Clear</button>
+        </div>
+      </div>
+      <ul class="history-list" id="historyList"></ul>
+    </section>
+
+  </main>
+
+  <footer class="footbar">
+    <span id="statusText">connecting…</span>
+    <span>Ctrl / ⌘ + Enter to analyze &middot; <a href="/docs">API docs</a></span>
+  </footer>
+
+</div>
+
+<script src="/static/script.js?v=4"></script>
+</body>
+</html>
